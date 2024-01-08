@@ -17,8 +17,34 @@ export class UsersService {
     return await this.userRepository.save(user);
   }
 
-  async findAll(): Promise<User[]> {
-    return await this.userRepository.find();
+  //je veux pouvoir voir la liste de tous les utilisateurs actuellement inscrits sur la plateforme
+  findAll(): Promise<User[]> {
+    const select: FindOptionsSelectByString<User> = [
+      'id',
+      'email',
+      'role',
+      'username',
+    ];
+    return this.userRepository.find({
+      select,
+    });
+  }
+
+  async findOneById(id: string): Promise<User> {
+    const select: FindOptionsSelectByString<User> = [
+      'id',
+      'email',
+      'role',
+      'username',
+    ];
+    const userv = await this.userRepository.findOne({
+      where: { id: id },
+      select,
+    });
+    if (userv) {
+      return userv;
+    }
+    throw new NotFoundException(`User with id ${id} not found`);
   }
 
   async findOne(email: string, needPwd?: boolean): Promise<User> {

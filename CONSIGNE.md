@@ -84,7 +84,7 @@ les paramètres de la route si celle-ci en a besoin.
 
 ### users.controller.ts
 
-#### POST users/auth/sign-up (route publique)
+#### 🟩 POST users/auth/sign-up (route publique)
 
 Speech client : En tant qu'employé, je veux pouvoir m'inscrire sur le portail afin de pouvoir gérer mon planning ainsi que celui de mon équipe.
 
@@ -104,7 +104,7 @@ email!: string;
 role?: 'Employee' | 'Admin' | 'ProjectManager';
 ```
 
-#### POST users/auth/login (route publique)
+#### 🟩 POST users/auth/login (route publique)
 
 Speech client : En tant qu'employé, je veux pouvoir me connecter sur le portail afin de pouvoir accéder à toutes les
 fonctionnalités qui necessitent une authentification.
@@ -120,7 +120,7 @@ email!: string;
 password!: string;
 ```
 
-#### GET users/:id
+#### 🟩  GET users/:id
 
 Speech client : En tant qu'employé, je veux pouvoir voir les informations personnelles d'un utilisateur de la plateforme en particulier.
 
@@ -130,11 +130,11 @@ Parametres (query) :
 id!: string; //au format uuidv4
 ```
 
-#### GET users/
+#### 🟩 GET users/
 
 Speech client : En tant qu'employé, je veux pouvoir voir la liste de tous les utilisateurs actuellement inscrits sur la plateforme
 
-#### GET users/me
+#### 🟩 GET users/me
 
 Speech client : En tant qu'employé, je dois pouvoir afficher, sur la plateforme, mes informations personnelles afin de me rappeler que je suis connecté.
 
@@ -157,15 +157,15 @@ id!: string; //au format uuidv4
 month!: number; //nombres de 1 (Janvier) à 12 (Decembre)
 ```
 
-### projects.controller.ts
+### 🟦projects.controller.ts
 
-#### GET /projects
+#### 🟦GET /projects
 
 Speech client :
 - En tant qu'*Administrateurs* ou *Chef de projet*, je veux pouvoir voir la liste de tous les projets de l'entreprise.
 - En tant qu'*Employé*, je veux pouvoir voir uniquement la liste de tous les projets de l'entreprise dans lesquels je suis impliqué.
 
-#### GET /projects/:id
+#### 🟦GET /projects/:id
 
 Speech client :
 - En tant qu'*Administrateurs* ou *Chef de projet*, je veux pouvoir consulter un projet en particulier.
@@ -180,7 +180,7 @@ Parametres (query) :
 id!: string; //au format uuidv4
 ```
 
-#### POST /projects
+#### 🟦POST /projects
 
 Speech client : En tant qu'*Administrateur*, je veux pouvoir créer un projet en renseignant un nom, une description et un
 référent qui doit être *Administrateur* ou *Chef de projet*.
@@ -198,16 +198,16 @@ name!: string;
 referringEmployeeId!: string; //au format uuidv4
 ```
 
-### project-users.controller.ts
+### 🟦project-users.controller.ts
 
-#### GET /project-users
+#### 🟦GET /project-users
 
 Speech client :
 - En tant qu'*Administrateurs* ou *Chef de projet*, je veux pouvoir voir toutes les assignations des employés aux différents projets.
 - En tant qu'*Employé*, je veux pouvoir voir toutes mes assignations aux différents projets.
 
 
-#### GET /project-users/:id
+#### 🟦GET /project-users/:id
 
 Speech client :
 - En tant qu'*Administrateurs* ou *Chef de projet*, je veux pouvoir voir une assignation en particulier.
@@ -221,7 +221,7 @@ Parametres (query) :
 id!: string; //au format uuidv4
 ```
 
-#### POST /project-users
+#### 🟦POST /project-users
 
 Speech client : En tant qu'*Administrateurs* ou *Chef de projet*, je dois pouvoir assigner un employé à un projet pour
 une durée determinée si ce dernier n'est pas déja affecté à un autre projet en même temps.
@@ -240,13 +240,13 @@ userId!: string; //au format uuidv4
 projectId!: string; //au format uuidv4
 ```
 
-### events.controller.ts
+### 🟥events.controller.ts
 
-#### GET /events
+#### 🟥GET /events
 
 Speech client : En tant qu'utilisateur connecté, je veux pouvoir voir tous les évènements planifiés de tous les utilisateurs.
 
-#### GET /events/:id
+#### 🟥GET /events/:id
 
 Speech client : En tant qu'utilisateur connecté, je veux pouvoir voir les informations d'un évènement en particulier.
 
@@ -258,7 +258,7 @@ Parametres (query) :
 id!: string; //au format uuidv4
 ```
 
-#### POST /events
+#### 🟥POST /events
 
 Speech client : Je veux que mes utilisateurs puissent poser un évènement de type *Télétravail* ou *Congé payé*.
 Voici la règlementation actuellement en place au sein de l'entreprise :
@@ -277,8 +277,8 @@ eventDescription?: string;
 eventType!: 'RemoteWork' | 'PaidLeave';
 ```
 
-#### POST /events/:id/validate
-#### POST /events/:id/decline
+#### 🟥POST /events/:id/validate
+#### 🟥POST /events/:id/decline
 
 Speech client : La validation de congés payes se fait sous certaines conditions :
 - Il est impossible d'altérer le statut d'un projet déjà validé ou refusé
@@ -291,7 +291,7 @@ Parametres (query) :
 id!: string; //au format uuidv4
 ```
 
-### BONUS
+### 🟥BONUS
 
 - Afin d'être conforme aux consignes delivrés par la CNIL, vous devez tracer toutes les requêtes effectuées sur votre API. Pour ce faire, vous *intercepterez* chaque requête effectuée et écrirez dans un fichier logs.txt une ligne par requête. Une ligne devra contenir : l'ip de la machine ayant fait la requête, la route appelée, les paramètres si ils existent ainsi que la date et l'heure de la requête.
 

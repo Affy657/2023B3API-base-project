@@ -5,7 +5,6 @@ import {
   Unique,
   BaseEntity,
 } from 'typeorm';
-import { v4 as uuidv4 } from 'uuid';
 
 @Entity()
 @Unique(['username'])
@@ -29,10 +28,4 @@ export class User extends BaseEntity {
     default: 'Employee',
   })
   role!: 'Employee' | 'Admin' | 'ProjectManager'; // valeur par defaut : 'Employee'
-
-  // Si vous souhaitez générer automatiquement un UUID lors de la création d'un nouvel utilisateur :
-  constructor() {
-    super();
-    this.id = uuidv4();
-  }
 }

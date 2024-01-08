@@ -20,7 +20,7 @@ export class AuthService {
     if (!(await bcrypt.compare(pass, user?.password))) {
       throw new UnauthorizedException();
     }
-    const payload = { email: user.email, sub: user.id };
+    const payload = { email: user.email, sub: user.id, role: user.role };
 
     delete user.password;
 
