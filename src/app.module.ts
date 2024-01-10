@@ -8,6 +8,7 @@ import { ProjectsModule } from './projects/projects.module';
 import { Project } from './projects/entities/project.entity';
 import { ProjectUsersModule } from './project-users/project-users.module';
 import { ProjectUser } from './project-users/entities/project-user.entity';
+import { EventsModule } from './events/events.module';
 
 @Module({
   imports: [
@@ -29,6 +30,7 @@ import { ProjectUser } from './project-users/entities/project-user.entity';
     UsersModule,
     ProjectsModule,
     ProjectUsersModule,
+    EventsModule,
   ],
   controllers: [],
   providers: [JwtStrategy],

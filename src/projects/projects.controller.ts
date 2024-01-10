@@ -81,7 +81,7 @@ export class ProjectsController {
     if (user.role === 'Admin' || user.role === 'ProjectManager') {
       return await this.projectsService.findOneById(id);
     } else {
-      return await this.projectsService.findOneById(id, user.userId);
+      return await this.projectsService.findOneByIdAndUserId(id, user.userId);
     }
   }
 

@@ -7,6 +7,7 @@ import {
   Entity,
 } from 'typeorm';
 import { Project } from '../../projects/entities/project.entity';
+import { User } from '../../users/entities/user.entity';
 
 @Entity()
 export class ProjectUser extends BaseEntity {
@@ -28,5 +29,8 @@ export class ProjectUser extends BaseEntity {
   @ManyToOne(() => Project)
   @JoinColumn({ name: 'projectId' })
   public project: Project;
-  user: import("c:/Users/adrie/Desktop/Ynov_B3/Dev_API/2023B3API-base-project/src/users/entities/user.entity").User;
+
+  @ManyToOne(() => User)
+  @JoinColumn({ name: 'userId' })
+  public user: User;
 }

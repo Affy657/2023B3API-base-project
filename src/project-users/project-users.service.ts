@@ -4,6 +4,7 @@ import {
   Injectable,
   NotFoundException,
   UnauthorizedException,
+  forwardRef,
 } from '@nestjs/common';
 import { CreateProjectUserDto } from './dto/create-project-user.dto';
 import { UpdateProjectUserDto } from './dto/update-project-user.dto';
@@ -18,19 +19,19 @@ export class ProjectUsersService {
   constructor(
     @InjectRepository(ProjectUser)
     private readonly projectUserRepository: Repository<ProjectUser>,
+    @Inject(forwardRef(() => ProjectsService))
     private readonly projectsService: ProjectsService,
     @Inject(UsersService)
     private readonly usersService: UsersService,
   ) {}
 
+  // je veux pouvoir voir toutes les assignations des employés aux différents projets.
   async findAll() {
-    // je veux pouvoir voir toutes les assignations des employés aux différents projets.
     return await this.projectUserRepository.find({});
   }
 
+  // je veux pouvoir voir toutes mes assignations aux différents projets.
   async findAllByUserId(id: string) {
-    console.log(id, 'id');
-    // je veux pouvoir voir toutes mes assignations aux différents projets.
     const projectsUser = await this.projectUserRepository.find({
       where: { id: id },
       relations: { project: true },
@@ -41,8 +42,38 @@ export class ProjectUsersService {
     return projectsUser;
   }
 
+  // je veux pouvoir voir toutes mes assignations aux différents projets.
+  async findAllProjectUserByUserId(userId: string) {
+    const projectsUser = await this.projectUserRepository.find({
+      where: { userId: userId },
+      relations: { project: true },
+    });
+    if (!projectsUser) {
+      throw new NotFoundException(`projectUser not found`);
+    }
+    return projectsUser;
+  }
+
+  // je veux pouvoir voir une de mes assignations par son le userId.
+  async findOneProjectUserByUserIdAndProjectId(
+    projectId: string,
+    userId: string,
+  ) {
+    const projectsUser = await this.projectUserRepository.findOne({
+      where: {
+        userId: userId,
+        projectId: projectId,
+      },
+      relations: { project: true },
+    });
+    if (!projectsUser) {
+      return null;
+    }
+    return projectsUser;
+  }
+
+  // je veux pouvoir voir une de mes assignations.
   async findOneById(id: string, userId?: string) {
-    // je veux pouvoir voir une de mes assignations.
     const projectUser = await this.projectUserRepository.findOne({
       where: { id: id },
     });
@@ -92,7 +123,6 @@ export class ProjectUsersService {
     savedProjectUser.project = project;
     savedProjectUser.project.referringEmployee = user;
     savedProjectUser.user = user;
-    console.log(savedProjectUser, 'savedProjectUser');
     return savedProjectUser;
   }
 

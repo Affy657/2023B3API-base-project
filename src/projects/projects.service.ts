@@ -38,27 +38,48 @@ export class ProjectsService {
   }
 
   // je veux pouvoir voir uniquement la liste de tous les projets de l'entreprise dans lesquels je suis impliqué
-  async findForUser(id: string) {
-    const projectUsers = await this.projectUsersService.findAllByUserId(id);
-    const projects = await this.projectRepository.find({
-      where: { referringEmployeeId: id },
-      relations: {
-        referringEmployee: true,
-      },
-    });
-    projects.forEach((project) => {
+  async findForUser(userId: string) {
+    const projectUsers =
+      await this.projectUsersService.findAllProjectUserByUserId(userId);
+    const projectIds = projectUsers.map((projectUser) => projectUser.projectId);
+    const projects = [];
+
+    for (let i = 0; i < projectIds.length; i++) {
+      const project = await this.projectRepository.findOne({
+        where: { id: projectIds[i] },
+        relations: {
+          referringEmployee: true,
+        },
+      });
+
       if (project && project.referringEmployee) {
         delete project.referringEmployee.password;
       }
-    });
-    console.log(projects, 'projects');
+      projects[i] = project;
+    }
     return projects;
   }
 
-  // je veux pouvoir consulter un projet en particulier
+  // je veux pouvoir voir uniquement la liste de tous les projets de l'entreprise dans lesquels je suis impliqué
+  // async findForUser(userId: string) {
+  //   const projectUsers = await this.projectUsersService.findAllByUserId(userId);
+  //   const projects = await this.projectRepository.find({
+  //     where: { referringEmployeeId: userId },
+  //     relations: {
+  //       referringEmployee: true,
+  //     },
+  //   });
+  //   projects.forEach((project) => {
+  //     if (project && project.referringEmployee) {
+  //       delete project.referringEmployee.password;
+  //     }
+  //   });
+  //   return projects;
+  // }
+
   async findOneById(id: string, userId?: string) {
     const project = await this.projectRepository.findOne({
-      where: { referringEmployeeId: id },
+      where: { id: id },
     });
     if (!project) {
       throw new NotFoundException(`projectUser not found`);
@@ -66,6 +87,30 @@ export class ProjectsService {
     if (userId && project.referringEmployeeId !== userId) {
       throw new ForbiddenException('Unauthorized');
     }
+    return project;
+  }
+
+  async findOneByIdAndUserId(projectId: string, userId: string) {
+    if (
+      !(await this.projectUsersService.findOneProjectUserByUserIdAndProjectId(
+        projectId,
+        userId,
+      ))
+    ) {
+      throw new ForbiddenException('Unauthorized');
+    }
+    const project = await this.projectRepository.findOne({
+      where: { id: projectId },
+    });
+    if (!project) {
+      throw new NotFoundException(`projectUser not found`);
+    }
+    console.log(
+      await this.projectUsersService.findOneProjectUserByUserIdAndProjectId(
+        projectId,
+        userId,
+      ),
+    );
     return project;
   }
 
