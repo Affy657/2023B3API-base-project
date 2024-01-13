@@ -11,13 +11,13 @@ import {
 @Unique(['email'])
 export class User extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
-  id!: string; // au format uuidv4
+  id!: string;
 
   @Column()
-  username!: string; // cette propriété doit porter une contrainte d'unicité
+  username!: string;
 
   @Column()
-  email!: string; // cette propriété doit porter une contrainte d'unicité
+  email!: string;
 
   @Column()
   password!: string;
@@ -27,5 +27,5 @@ export class User extends BaseEntity {
     enum: ['Employee', 'Admin', 'ProjectManager'],
     default: 'Employee',
   })
-  role!: 'Employee' | 'Admin' | 'ProjectManager'; // valeur par defaut : 'Employee'
+  role!: 'Employee' | 'Admin' | 'ProjectManager';
 }

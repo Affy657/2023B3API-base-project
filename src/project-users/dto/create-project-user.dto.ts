@@ -8,8 +8,8 @@ export class CreateProjectUserDto {
   endDate!: Date;
 
   @IsUUID(4)
-  projectId!: string; //au format uuidv4
+  projectId!: string;
 
   @IsUUID(4)
-  userId!: string; //au format uuidv4
+  userId!: string;
 }

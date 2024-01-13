@@ -22,7 +22,6 @@ export class ProjectsService {
     private readonly projectUsersService: ProjectUsersService,
   ) {}
 
-  //je veux pouvoir voir la liste de tous les projets de l'entreprise
   async findAll() {
     const projects = await this.projectRepository.find({
       relations: {
@@ -37,7 +36,6 @@ export class ProjectsService {
     return projects;
   }
 
-  // je veux pouvoir voir uniquement la liste de tous les projets de l'entreprise dans lesquels je suis impliqué
   async findForUser(userId: string) {
     const projectUsers =
       await this.projectUsersService.findAllProjectUserByUserId(userId);
@@ -59,23 +57,6 @@ export class ProjectsService {
     }
     return projects;
   }
-
-  // je veux pouvoir voir uniquement la liste de tous les projets de l'entreprise dans lesquels je suis impliqué
-  // async findForUser(userId: string) {
-  //   const projectUsers = await this.projectUsersService.findAllByUserId(userId);
-  //   const projects = await this.projectRepository.find({
-  //     where: { referringEmployeeId: userId },
-  //     relations: {
-  //       referringEmployee: true,
-  //     },
-  //   });
-  //   projects.forEach((project) => {
-  //     if (project && project.referringEmployee) {
-  //       delete project.referringEmployee.password;
-  //     }
-  //   });
-  //   return projects;
-  // }
 
   async findOneById(id: string, userId?: string) {
     const project = await this.projectRepository.findOne({

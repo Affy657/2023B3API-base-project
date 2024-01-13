@@ -12,7 +12,7 @@ import { User } from '../../users/entities/user.entity';
 @Entity()
 export class ProjectUser extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
-  id!: string; //au format uuidv4
+  id!: string;
 
   @Column()
   startDate!: Date;
@@ -21,10 +21,10 @@ export class ProjectUser extends BaseEntity {
   endDate!: Date;
 
   @Column()
-  projectId!: string; //au format uuidv4
+  projectId!: string;
 
   @Column()
-  userId!: string; //au format uuidv4
+  userId!: string;
 
   @ManyToOne(() => Project)
   @JoinColumn({ name: 'projectId' })

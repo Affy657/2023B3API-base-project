@@ -17,7 +17,6 @@ export class UsersService {
     return await this.userRepository.save(user);
   }
 
-  //je veux pouvoir voir la liste de tous les utilisateurs actuellement inscrits sur la plateforme
   findAll(): Promise<User[]> {
     const select: FindOptionsSelectByString<User> = [
       'id',
@@ -70,13 +69,13 @@ export class UsersService {
   }
 
   async update(id: string, updateUserDto: UpdateUserDto): Promise<User> {
-    await this.findOne(id); // pour vérifier si l'utilisateur existe
+    await this.findOne(id);
     await this.userRepository.update(id, updateUserDto);
     return this.findOne(id);
   }
 
   async remove(id: string): Promise<void> {
-    const user = await this.findOne(id); // pour vérifier si l'utilisateur existe
+    const user = await this.findOne(id);
     await this.userRepository.remove(user);
   }
 }

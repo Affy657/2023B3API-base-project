@@ -25,12 +25,10 @@ export class ProjectUsersService {
     private readonly usersService: UsersService,
   ) {}
 
-  // je veux pouvoir voir toutes les assignations des employés aux différents projets.
   async findAll() {
     return await this.projectUserRepository.find({});
   }
 
-  // je veux pouvoir voir toutes mes assignations aux différents projets.
   async findAllByUserId(id: string) {
     const projectsUser = await this.projectUserRepository.find({
       where: { id: id },
@@ -42,7 +40,6 @@ export class ProjectUsersService {
     return projectsUser;
   }
 
-  // je veux pouvoir voir toutes mes assignations aux différents projets.
   async findAllProjectUserByUserId(userId: string) {
     const projectsUser = await this.projectUserRepository.find({
       where: { userId: userId },
@@ -54,7 +51,6 @@ export class ProjectUsersService {
     return projectsUser;
   }
 
-  // je veux pouvoir voir une de mes assignations par son le userId.
   async findOneProjectUserByUserIdAndProjectId(
     projectId: string,
     userId: string,
@@ -72,7 +68,6 @@ export class ProjectUsersService {
     return projectsUser;
   }
 
-  // je veux pouvoir voir une de mes assignations.
   async findOneById(id: string, userId?: string) {
     const projectUser = await this.projectUserRepository.findOne({
       where: { id: id },
@@ -87,9 +82,6 @@ export class ProjectUsersService {
   }
 
   async create(createProjectUserDto: CreateProjectUserDto) {
-    // je dois pouvoir assigner un employé à un projet pour une durée determinée si
-    // ce dernier n'est pas déja affecté à un autre projet en même temps.
-
     const project = await this.projectsService.findOneById(
       createProjectUserDto.projectId,
     );

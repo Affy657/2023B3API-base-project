@@ -5,5 +5,5 @@ export class CreateProjectDto {
   name!: string;
 
   @IsUUID(4)
-  referringEmployeeId!: string; //au format uuidv4
+  referringEmployeeId!: string;
 }

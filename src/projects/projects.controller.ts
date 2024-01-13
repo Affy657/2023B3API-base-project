@@ -25,15 +25,6 @@ export class ProjectsController {
     private readonly usersService: UsersService,
   ) {}
 
-  //POST /projects
-  //En tant qu'Administrateur,
-  //je veux pouvoir créer un projet en renseignant un nom
-  //et un référent qui doit être Administrateur ou Chef de projet.
-  //Si une personne essaie de créer un projet sans être administrateur, il faut que tu me renvoies une UnauthorizedException. Fais en de même si la personne référente donnée n'est pas au minimum un chef de projet. Penses à mettre en place une validation sur ta route, il faut que le nom du projet contienne au moins 3 caractères. Pour que le portail puisse afficher une modale de succès, il faudrait que tu m'inclues la relation referringEmployee dans le retour de la route.
-  //   Parametres (body) :
-
-  // name!: string;
-  // referringEmployeeId!: string; //au format uuidv4
   @Post()
   async create(@Body() createProjectDto: CreateProjectDto, @Req() request) {
     const user = request.user;
@@ -57,9 +48,6 @@ export class ProjectsController {
     }
   }
 
-  //GET /projects
-  //En tant qu'Administrateurs ou Chef de projet, je veux pouvoir voir la liste de tous les projets de l'entreprise.
-  //En tant qu'Employé, je veux pouvoir voir uniquement la liste de tous les projets de l'entreprise dans lesquels je suis impliqué.
   @Get()
   async findAll(@Req() request) {
     const user = request.user;
@@ -69,11 +57,6 @@ export class ProjectsController {
       return await this.projectsService.findForUser(user.userId);
     }
   }
-
-  //GET /projects/:id
-  //En tant qu'Administrateurs ou Chef de projet, je veux pouvoir consulter un projet en particulier.
-  //En tant qu'Employé, je veux pouvoir voir un projet de l'entreprise dans lequel je suis impliqué.
-  // Dans le cas où un utilisateur n'a pas le droit de consulter le projet demandé, il faudrait que tu me renvoies une ForbiddenError.
 
   @Get(':id')
   async findOne(@Param('id') id: string, @Req() request) {

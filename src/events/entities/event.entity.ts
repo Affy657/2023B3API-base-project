@@ -3,7 +3,7 @@ import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 @Entity()
 export class Event extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
-  id!: string; //au format uuidv4
+  id!: string;
 
   @Column()
   date!: Date;
@@ -18,5 +18,5 @@ export class Event extends BaseEntity {
   eventDescription?: string;
 
   @Column()
-  userId!: string; //au format uuidv4
+  userId!: string;
 }
